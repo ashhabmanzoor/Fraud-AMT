@@ -12,7 +12,7 @@ p = re.compile("(\d+)?(" ")?(,)?(" ")?(\d+)?(" ")?[,]?(" ")?(\d+)[.]?(\d+)?")
 l = re.compile(
     "(\d+)|(\d\,\d{3})|(\d\,\d{3}\.\d+)|(\d\d\,\d{3})|(\d\d\,\d{3}\.\d+)")
 t = re.compile("(\d+)(,)?(\d+)?[.]?(\d+)?")
-for x in data["X"][-5:]:
+for x in data["X"][:]:
 
     if type(x) == str:
         new = []
