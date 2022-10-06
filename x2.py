@@ -10,9 +10,9 @@ final_2 = []
 
 p = re.compile("(\d+)?(" ")?(,)?(" ")?(\d+)?(" ")?[,]?(" ")?(\d+)[.]?(\d+)?")
 l = re.compile(
-    "(\d+)|(\d\,\d{3})|(\d\,\d{3}\.\d+)|(\d\d\,\d{3})|(\d\d\,\d{3}\.\d+)")
+    "((\d+\.\d+)|(\d\,\d{3}\.\d+)|(\d\,\d{3})|(\d\d\,\d{3}\.\d+)|(\d+)|(\d\d\,\d{3}))")
 # t = re.compile("(\d+)(,)?(\d+)?[.]?(\d+)?")
-for x in data["X"][:]:
+for x in data["X"][-1:]:
 
     if type(x) == str:
         new = []
@@ -62,7 +62,7 @@ for x in data["X"][:]:
                 else:
                     # i = re.sub(
                     #     "(\d+)[,](\d{3})(.)?(\d+)?(,)(\d+)[,](\d+)(.)?(\d+)?", r"\1\2\3\4\5\6\7\8\9", b)
-                    morethantwo_comma_count_m = p.finditer(b)
+                    morethantwo_comma_count_m = l.finditer(b)
                     for q in morethantwo_comma_count_m:
                         z = re.match(
                             "\d+(,)\d{3}(.)?(\d+)?", q.group())
@@ -70,6 +70,7 @@ for x in data["X"][:]:
                             "(\d+)[,](\d+)[,](\d+)(\.\d+)?", q.group())
                         r = re.match(
                             "(,)(\d+)?(,)?(\d+)?(.)?(\d+)?", q.group())
+
                         if z:
                             i = re.sub(
                                 "^(\d+)?[,](\d+)?(.)?(\d+)?", r"\1\2\3\4", q.group())
@@ -80,9 +81,31 @@ for x in data["X"][:]:
                             new.append(i)
 
                         elif r:
-                            i = re.sub("(,)(\d+)?[,]?(\d+)?(.)?(\d+)?",
-                                       r"\2\3\4\5", q.group())
-                            new.append(i)
+                            o = str(q.group())
+                            o = o[1:]
+
+                            mttwc_cf_one_comma_first = re.match(
+                                "(\d)(,)\d{3}(.)?(\d+)?", o)
+                            if mttwc_cf_one_comma_first:
+                                i = re.sub(
+                                    "(\d)[,](\d{3})(.)?(\d+)?", r"\1\2\3\4", o)
+                                new.append(i)
+                                continue
+
+                            mttwc_cf_comma_between_numbers = re.match(
+                                "(\d+)(\.)?(\d+)?(\,)(\d+)?(\.)?(\d+)?", o)
+                            if mttwc_cf_comma_between_numbers:
+                                i = re.finditer(
+                                    r"\d+?(.)?\d+", q.group())
+                                for find in i:
+                                    new.append(find.group())
+                                continue
+
+                            else:
+                                new.append(o)
+                            # i = re.sub("(,)(\d+)?[,]?(\d+)?(.)?(\d+)?",
+                            #            r"\2\3\4\5", q.group())
+                            # new.append(i)
                         else:
                             new.append(q.group())
             elif b.count(",") == 1:
