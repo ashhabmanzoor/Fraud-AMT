@@ -6,7 +6,7 @@ import pandas as pd
 data = pd.read_excel(
     r"C:\Users\HP\Documents\Resources\Change_Negative_2.xlsx", sheet_name=0)
 final = []
-final_2 = []
+
 
 p = re.compile("(\d+)?(" ")?(,)?(" ")?(\d+)?(" ")?[,]?(" ")?(\d+)[.]?(\d+)?")
 l = re.compile(
@@ -237,7 +237,7 @@ for x in data["X"][:]:
                 try:
                     sum += int(float(new[x]))
                 except:
-                    final_2.append(x)
+                    continue
             if int(sum) == int(float(new[-1])):
                 final.append([new[-1]])
             else:
@@ -248,7 +248,7 @@ for x in data["X"][:]:
                 try:
                     sum += int(float(new[x]))
                 except:
-                    final_2.append(x)
+                    continue
             if int(sum) == int(float(new[-1])):
                 final.append([new[-1]])
             else:
@@ -276,4 +276,3 @@ for v in final:
 # z = data.to_excel(
 #     r"C:\Users\HP\Documents\Resources\X.xlsx", index=False)
 # # print(z)
-print(final_2)
