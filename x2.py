@@ -1,10 +1,11 @@
+from datetime import datetime
 import math
 import re
 import pandas as pd
 
 
 data = pd.read_excel(
-    r"C:\Users\HP\Documents\Resources\Change_Negative_2.xlsx", sheet_name=0)
+    r"C:\Users\HP\Documents\Resources\Master File-Copy.xlsx", sheet_name=0)
 final = []
 final_2 = []
 
@@ -12,7 +13,7 @@ p = re.compile("(\d+)?(" ")?(,)?(" ")?(\d+)?(" ")?[,]?(" ")?(\d+)[.]?(\d+)?")
 l = re.compile(
     "((\d+\.\d+)|(\d\,\d{3}\.\d+)|(\d\,\d{3})|(\d\d\,\d{3}\.\d+)|(\d\d\,\d{3})|(\d+))")
 # t = re.compile("(\d+)(,)?(\d+)?[.]?(\d+)?")
-for x in data["X"][:]:
+for x in data["Fraud Amount"][:]:
 
     if type(x) == str:
         new = []
@@ -290,6 +291,8 @@ for x in data["X"][:]:
             final.append(x)
         else:
             final.append(x)
+    elif isinstance(x, datetime):
+        final.append(0)
     elif math.isnan(x):
         final.append(0)
     elif type(x) == float:
@@ -297,9 +300,9 @@ for x in data["X"][:]:
     else:
         final.append(int(x))
 
-data["New_5"] = final
+data["New_1"] = final
 
 z = data.to_excel(
-    r"C:\Users\HP\Documents\Resources\X.xlsx", index=False)
-# print(z)
+    r"C:\Users\HP\Documents\Resources\Master File-Copy.xlsx", index=False)
+# # print(z)
 print(final_2)
