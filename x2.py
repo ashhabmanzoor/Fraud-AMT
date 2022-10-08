@@ -12,11 +12,11 @@ p = re.compile("(\d+)?(" ")?(,)?(" ")?(\d+)?(" ")?[,]?(" ")?(\d+)[.]?(\d+)?")
 l = re.compile(
     "((\d+\.\d+)|(\d\,\d{3}\.\d+)|(\d\,\d{3})|(\d\d\,\d{3}\.\d+)|(\d+)|(\d\d\,\d{3}))")
 # t = re.compile("(\d+)(,)?(\d+)?[.]?(\d+)?")
-for x in data["X"][-1:]:
+for x in data["X"][-10:]:
 
     if type(x) == str:
         new = []
-        split_cell = re.split("-|!|_| ", x)
+        split_cell = re.split("-|!|_|(=) ", x)
         for b in split_cell:
             if b.count("=") >= 1:
                 if b.endswith("="):
@@ -276,6 +276,8 @@ for x in data["X"][-1:]:
                 final.append([new[-1]])
             else:
                 final.append(new)
+        elif x:
+            continue
 
         else:
             final.append(new)
