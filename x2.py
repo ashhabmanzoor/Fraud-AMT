@@ -297,10 +297,9 @@ for x in data["X"][:]:
     else:
         final.append(int(x))
 
-# data["New_4"] = final
-for v in final:
-    print(v)
-# z = data.to_excel(
-#     r"C:\Users\HP\Documents\Resources\X.xlsx", index=False)
-# # print(z)
+data["New_5"] = final
+
+z = data.to_excel(
+    r"C:\Users\HP\Documents\Resources\X.xlsx", index=False)
+# print(z)
 print(final_2)
